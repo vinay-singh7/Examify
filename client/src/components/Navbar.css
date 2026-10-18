@@ -1,0 +1,121 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--fallow-loam);
+  border-bottom: 1.5px solid var(--fallow-ink);
+  box-shadow: none;
+}
+
+.nav-container {
+  max-width: 1240px;
+  width: 92%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 68px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Anton', sans-serif;
+  font-size: 24px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.nav-logo-badge {
+  background: var(--fallow-red);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 0;
+  font-family: 'Martian Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 10px;
+}
+
+.nav-link {
+  color: var(--fallow-cream);
+  text-decoration: none;
+  font-family: 'Martian Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ffffff;
+  border-color: rgba(231, 226, 216, 0.4);
+  background: rgba(231, 226, 216, 0.08);
+}
+
+.nav-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  background: rgba(231, 226, 216, 0.08);
+  border: 1px solid rgba(231, 226, 216, 0.3);
+  border-radius: 0;
+}
+
+.nav-avatar {
+  width: 24px;
+  height: 24px;
+  background: var(--fallow-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Martian Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+}
+
+.nav-user-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--fallow-cream);
+}
+
+.nav-user-role {
+  font-family: 'Martian Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(239, 73, 60, 0.25);
+  color: var(--fallow-cream);
+  padding: 2px 6px;
+  border: 1px solid var(--fallow-red);
+}
+
+.nav-btn-logout {
+  padding: 8px 14px;
+  font-size: 11px;
+  border-radius: 0;
+  border-color: rgba(231, 226, 216, 0.4);
+  color: var(--fallow-cream);
+}
+
+.nav-btn-logout:hover {
+  background: var(--fallow-red);
+  color: #fff;
+  border-color: var(--fallow-red);
+}

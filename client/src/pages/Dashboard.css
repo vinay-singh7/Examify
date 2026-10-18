@@ -1,0 +1,160 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--fallow-paper);
+  padding: 32px;
+  border: 1.5px solid var(--fallow-ink);
+}
+
+.dashboard-title-area h1 {
+  font-size: 38px;
+  margin-bottom: 8px;
+}
+
+.dashboard-subtitle {
+  color: var(--text-muted);
+  font-family: 'Martian Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-badge {
+  background: var(--fallow-ink);
+  color: var(--fallow-paper);
+  padding: 2px 8px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: var(--fallow-paper);
+  border: 1.5px solid var(--fallow-ink);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 #171717;
+}
+
+.stat-icon-box {
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--fallow-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: #f4efe4;
+}
+
+.icon-blue,
+.icon-green,
+.icon-purple {
+  background: #f4efe4;
+  border-color: var(--fallow-ink);
+}
+
+.stat-info h3 {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-info p {
+  color: var(--text-muted);
+  font-family: 'Martian Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.recent-submissions {
+  background: var(--fallow-paper);
+  border: 1.5px solid var(--fallow-ink);
+  padding: 32px;
+}
+
+.recent-submissions h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.submissions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.submission-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #fbf8f0;
+  border: 1px solid rgba(23, 23, 23, 0.2);
+  transition: var(--transition);
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.submission-item:hover {
+  background: #fff;
+  border-color: var(--fallow-ink);
+}
+
+.submission-info h3 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.submission-info p {
+  font-family: 'Martian Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.submission-score {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.submission-score .score {
+  font-family: 'Anton', sans-serif;
+  font-size: 22px;
+  color: var(--fallow-ink);
+}
