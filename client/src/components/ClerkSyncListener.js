@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 /**
  * ClerkSyncListener automatically synchronizes the active Clerk user session
- * into Examify's MongoDB backend database so user IDs, submissions, and JWT tokens
+ * into Examify's MongoDB backend database so user IDs, roles, and JWT tokens
  * stay 100% compatible with existing exam features.
  */
 const ClerkSyncListener = () => {
@@ -16,8 +16,15 @@ const ClerkSyncListener = () => {
     if (isLoaded && isSignedIn && user) {
       const clerkId = user.id;
       const primaryEmail = user.primaryEmailAddress?.emailAddress;
-      const fullName = user.fullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username || 'Examify Student';
+      const fullName =
+        user.fullName ||
+        `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
+        user.username ||
+        'Examify User';
       const avatarUrl = user.imageUrl || '';
+
+      // Get user-chosen role from localStorage if selected during registration
+      const chosenRole = localStorage.getItem('pending_signup_role') || 'student';
 
       // Sync only if not already synced for this Clerk user or if DB user is empty
       if (syncedUserIdRef.current !== clerkId || !dbUser) {
@@ -26,11 +33,16 @@ const ClerkSyncListener = () => {
           clerkId,
           email: primaryEmail,
           name: fullName,
-          role: 'student',
+          role: chosenRole,
           avatar: avatarUrl,
-        }).catch((err) => {
-          console.error('Auto Clerk sync failed:', err);
-        });
+        })
+          .then(() => {
+            // Clear pending role once synced
+            localStorage.removeItem('pending_signup_role');
+          })
+          .catch((err) => {
+            console.error('Auto Clerk sync failed:', err);
+          });
       }
     }
   }, [isLoaded, isSignedIn, user, syncClerkUser, dbUser]);
