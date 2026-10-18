@@ -25,10 +25,23 @@ app.use(async (req, res, next) => {
 });
 
 
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/quizzes', require('./routes/quizRoutes'));
-app.use('/api/submissions', require('./routes/submissionRoutes'));
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const quizRoutes = require('./routes/quizRoutes');
+const submissionRoutes = require('./routes/submissionRoutes');
+
+// Mount with /api prefix
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/quizzes', quizRoutes);
+app.use('/api/submissions', submissionRoutes);
+
+// Mount without /api prefix as fallback in case Vercel rewrites strip /api
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/quizzes', quizRoutes);
+app.use('/submissions', submissionRoutes);
+
 
 app.get('/', (req, res) => {
   res.json({ message: 'Online Quiz & Exam System API' });
@@ -44,10 +57,11 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5001;
 
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
   });
 }
+
 
 module.exports = app;
