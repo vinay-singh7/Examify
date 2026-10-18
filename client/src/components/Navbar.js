@@ -1,15 +1,21 @@
 import React, { useContext } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { UserButton, useClerk } from '@clerk/react';
+import { UserButton, useClerk, useUser } from '@clerk/react';
 import './Navbar.css';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const { isSignedIn: isClerkSignedIn, user: clerkUser } = useUser();
   const { signOut } = useClerk();
   const navigate = useNavigate();
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
+
+  const activeUser = user || (isClerkSignedIn && clerkUser ? {
+    name: clerkUser.fullName || clerkUser.firstName || 'Examify User',
+    role: localStorage.getItem('pending_signup_role') || 'student'
+  } : null);
 
   const handleLogout = async () => {
     try {
@@ -20,6 +26,7 @@ const Navbar = () => {
     logout();
     navigate('/');
   };
+
 
 
   const getInitials = (name) => {
@@ -67,10 +74,11 @@ const Navbar = () => {
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          {user ? (
+          {activeUser ? (
             <>
               <Link
                 to="/dashboard"
+
                 style={{
                   fontFamily: 'Martian Mono, monospace',
                   fontSize: '11px',
@@ -158,7 +166,7 @@ const Navbar = () => {
           <span className="nav-logo-badge">Pro</span>
         </Link>
         <ul className="nav-menu">
-          {user ? (
+          {activeUser ? (
             <>
               <li className="nav-item">
                 <NavLink to="/dashboard" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
@@ -175,7 +183,7 @@ const Navbar = () => {
                   Leaderboard
                 </NavLink>
               </li>
-              {(user.role === 'teacher' || user.role === 'admin') && (
+              {(activeUser.role === 'teacher' || activeUser.role === 'admin') && (
                 <>
                   <li className="nav-item">
                     <NavLink to="/create-quiz" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
@@ -191,14 +199,15 @@ const Navbar = () => {
               )}
               <li className="nav-item">
                 <div className="nav-user-pill">
-                  <div className="nav-avatar">{getInitials(user.name)}</div>
-                  <span className="nav-user-name">{user.name}</span>
-                  <span className="nav-user-role">{user.role}</span>
+                  <div className="nav-avatar">{getInitials(activeUser.name)}</div>
+                  <span className="nav-user-name">{activeUser.name}</span>
+                  <span className="nav-user-role">{activeUser.role}</span>
                 </div>
               </li>
               <li className="nav-item" style={{ display: 'flex', alignItems: 'center' }}>
                 <UserButton afterSignOutUrl="/" />
               </li>
+
               <li className="nav-item">
                 <button onClick={handleLogout} className="btn btn-secondary nav-btn-logout">
                   Logout
