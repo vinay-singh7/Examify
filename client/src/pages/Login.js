@@ -29,7 +29,10 @@ const Login = () => {
       await login(email, password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      console.error('Login error details:', err);
+      const serverMsg = err.response?.data?.message;
+      const networkMsg = err.message ? `Login failed: ${err.message}` : null;
+      setError(serverMsg || networkMsg || 'Login failed. Check server connection or environment variables.');
       setLoading(false);
     }
   };

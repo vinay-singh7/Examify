@@ -43,7 +43,10 @@ const Register = () => {
       await register(name, email, password, role);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      console.error('Registration error details:', err);
+      const serverMsg = err.response?.data?.message;
+      const networkMsg = err.message ? `Registration failed: ${err.message}` : null;
+      setError(serverMsg || networkMsg || 'Registration failed. Check server connection or environment variables.');
       setLoading(false);
     }
   };
