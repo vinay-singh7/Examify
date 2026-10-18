@@ -17,9 +17,13 @@ const userSchema = new mongoose.Schema({
       'Please add a valid email'
     ]
   },
+  clerkId: {
+    type: String,
+    sparse: true,
+    unique: true
+  },
   password: {
     type: String,
-    required: [true, 'Please add a password'],
     minlength: 6,
     select: false
   },

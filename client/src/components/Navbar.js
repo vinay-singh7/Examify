@@ -1,18 +1,26 @@
 import React, { useContext } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { UserButton, useClerk } from '@clerk/react';
 import './Navbar.css';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const { signOut } = useClerk();
   const navigate = useNavigate();
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (e) {
+      // ignore if clerk was not signed in
+    }
     logout();
     navigate('/');
   };
+
 
   const getInitials = (name) => {
     if (!name) return 'U';
@@ -188,11 +196,15 @@ const Navbar = () => {
                   <span className="nav-user-role">{user.role}</span>
                 </div>
               </li>
+              <li className="nav-item" style={{ display: 'flex', alignItems: 'center' }}>
+                <UserButton afterSignOutUrl="/" />
+              </li>
               <li className="nav-item">
                 <button onClick={handleLogout} className="btn btn-secondary nav-btn-logout">
                   Logout
                 </button>
               </li>
+
             </>
           ) : (
             <>

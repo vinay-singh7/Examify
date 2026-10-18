@@ -117,3 +117,72 @@ exports.getMe = async (req, res) => {
     });
   }
 };
+
+// Sync Clerk user with MongoDB database
+exports.clerkSync = async (req, res) => {
+  try {
+    const { clerkId, email, name, role, avatar } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email is required for Clerk user sync'
+      });
+    }
+
+    let user = await User.findOne({
+      $or: [
+        { clerkId: clerkId },
+        { email: email.toLowerCase() }
+      ]
+    });
+
+    if (!user) {
+      user = await User.create({
+        clerkId,
+        name: name || 'Examify User',
+        email: email.toLowerCase(),
+        role: role || 'student',
+        avatar: avatar || ''
+      });
+    } else {
+      let updated = false;
+      if (!user.clerkId && clerkId) {
+        user.clerkId = clerkId;
+        updated = true;
+      }
+      if (name && (!user.name || user.name === 'Examify User')) {
+        user.name = name;
+        updated = true;
+      }
+      if (avatar && !user.avatar) {
+        user.avatar = avatar;
+        updated = true;
+      }
+      if (updated) {
+        await user.save();
+      }
+    }
+
+    const token = generateToken(user._id);
+
+    res.json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar
+      }
+    });
+  } catch (error) {
+    console.error('Error syncing Clerk user:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Clerk sync failed'
+    });
+  }
+};
+

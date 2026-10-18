@@ -14,7 +14,11 @@ import CreateQuiz from './pages/CreateQuiz';
 import Results from './pages/Results';
 import Leaderboard from './pages/Leaderboard';
 import AdminAnalytics from './pages/AdminAnalytics';
+import { ClerkProvider } from '@clerk/react';
+import ClerkSyncListener from './components/ClerkSyncListener';
 import './App.css';
+
+const CLERK_PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || 'pk_test_c21pbGluZy1jcmFuZS0yMzUuY2xlcmsuYWNjb3VudHMuZGV2JA';
 
 function MainLayout() {
   const location = useLocation();
@@ -100,13 +104,25 @@ function MainLayout() {
 }
 
 function App() {
-  return (
+  const content = (
     <AuthProvider>
+      <ClerkSyncListener />
       <Router>
         <MainLayout />
       </Router>
     </AuthProvider>
   );
+
+  if (CLERK_PUBLISHABLE_KEY) {
+    return (
+      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+        {content}
+      </ClerkProvider>
+    );
+  }
+
+  return content;
 }
 
 export default App;
+

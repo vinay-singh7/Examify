@@ -67,6 +67,19 @@ export const AuthProvider = ({ children }) => {
     return res.data;
   };
 
+  const syncClerkUser = async (clerkUserData) => {
+    try {
+      const res = await api.post('/api/auth/clerk-sync', clerkUserData);
+      localStorage.setItem('token', res.data.token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+      setUser(res.data.user);
+      return res.data;
+    } catch (error) {
+      console.error('Failed to sync Clerk user with backend:', error);
+      throw error;
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
@@ -80,6 +93,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         register,
+        syncClerkUser,
         logout,
       }}
     >
@@ -87,3 +101,13 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => {
+  const context = React.useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+
