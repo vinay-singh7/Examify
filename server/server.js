@@ -13,9 +13,17 @@ app.use(express.urlencoded({ extended: true }));
 
 // Ensure DB connects on requests in serverless environments
 app.use(async (req, res, next) => {
-  await connectDB();
-  next();
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: `Database Connection Failed: ${error.message}. Make sure MONGODB_URI is configured on Vercel environment variables.`
+    });
+  }
 });
+
 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
