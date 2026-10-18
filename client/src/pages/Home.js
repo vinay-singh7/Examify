@@ -166,12 +166,54 @@ const Home = () => {
   }, []);
 
   const examCards = [
-    { name: 'FULL-STACK JAVASCRIPT', code: 'EXAM-JS-2026', time: '45 MINS', questions: '30 MCQs' },
-    { name: 'ALGORITHMS & DATA STRUCTURES', code: 'EXAM-DSA-901', time: '60 MINS', questions: '25 ITEMS' },
-    { name: 'DATABASE INTERNALS & SQL', code: 'EXAM-DB-402', time: '40 MINS', questions: '20 MCQs' },
-    { name: 'COMPUTER ARCHITECTURE', code: 'EXAM-CS-103', time: '50 MINS', questions: '35 ITEMS' },
-    { name: 'REACT LIFECYCLE & STATE', code: 'EXAM-FE-505', time: '30 MINS', questions: '20 MCQs' },
-    { name: 'NETWORK SECURITY & PROCTORING', code: 'EXAM-SEC-808', time: '45 MINS', questions: '25 ITEMS' },
+    {
+      name: 'FULL-STACK JAVASCRIPT',
+      code: 'EXAM-JS-2026',
+      time: '45 MINS',
+      questions: '30 MCQs',
+      subject: 'WEB DEVELOPMENT',
+      image: 'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?auto=format&fit=crop&w=700&q=80'
+    },
+    {
+      name: 'ALGORITHMS & DATA STRUCTURES',
+      code: 'EXAM-DSA-901',
+      time: '60 MINS',
+      questions: '25 ITEMS',
+      subject: 'COMPUTER SCIENCE',
+      image: 'https://images.unsplash.com/photo-1516116211227-bbc0429f4b32?auto=format&fit=crop&w=700&q=80'
+    },
+    {
+      name: 'DATABASE INTERNALS & SQL',
+      code: 'EXAM-DB-402',
+      time: '40 MINS',
+      questions: '20 MCQs',
+      subject: 'DATA SYSTEMS',
+      image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=700&q=80'
+    },
+    {
+      name: 'COMPUTER ARCHITECTURE',
+      code: 'EXAM-CS-103',
+      time: '50 MINS',
+      questions: '35 ITEMS',
+      subject: 'HARDWARE & SYSTEMS',
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=700&q=80'
+    },
+    {
+      name: 'REACT LIFECYCLE & STATE',
+      code: 'EXAM-FE-505',
+      time: '30 MINS',
+      questions: '20 MCQs',
+      subject: 'FRONTEND ENGINEERING',
+      image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=700&q=80'
+    },
+    {
+      name: 'NETWORK SECURITY & PROCTORING',
+      code: 'EXAM-SEC-808',
+      time: '45 MINS',
+      questions: '25 ITEMS',
+      subject: 'CYBERSECURITY',
+      image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=700&q=80'
+    },
   ];
 
   const chapters = [
@@ -349,25 +391,28 @@ const Home = () => {
             <div className="rail-track" ref={railTrackRef}>
               {examCards.map((card, i) => (
                 <div key={i} className="fallow-card">
-                  <div className="fallow-mono" style={{ color: 'rgba(23, 23, 23, 0.56)' }}>{card.code}</div>
-                  <div className="card-canvas" style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: '#ede8dc',
-                    fontFamily: 'Martian Mono, monospace',
-                    fontSize: '11px',
-                    color: '#71695f',
-                    gap: '8px'
-                  }}>
-                    <span>[ MODULE #{i + 1} ]</span>
-                    <span style={{ color: 'var(--fallow-red)' }}>{card.time}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span className="fallow-mono" style={{ color: 'rgba(23, 23, 23, 0.6)', fontSize: '10px' }}>{card.code}</span>
+                    <span className="fallow-mono" style={{ color: 'var(--fallow-red)', fontSize: '10px', fontWeight: 700 }}>{card.time}</span>
                   </div>
+
+                  <div className="card-canvas-media">
+                    <img
+                      src={card.image}
+                      alt={card.name}
+                      className="card-media-img"
+                      loading="lazy"
+                    />
+                    <div className="card-media-badge fallow-mono">
+                      <span>{card.subject}</span>
+                    </div>
+                  </div>
+
                   <div className="card-title-row">
-                    <h3 className="fallow-display" style={{ fontSize: '20px' }}>{card.name}</h3>
+                    <h3 className="fallow-display" style={{ fontSize: '20px', lineHeight: 1.1 }}>{card.name}</h3>
                   </div>
-                  <div className="fallow-mono" style={{ fontSize: '10px', color: 'rgba(23, 23, 23, 0.6)' }}>
+
+                  <div className="fallow-mono" style={{ fontSize: '10.5px', color: 'rgba(23, 23, 23, 0.65)', borderTop: '1px solid rgba(23, 23, 23, 0.14)', paddingTop: '10px' }}>
                     {card.questions} • TIMED AUTO-SUBMISSION
                   </div>
                 </div>
