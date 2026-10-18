@@ -259,18 +259,22 @@ const Home = () => {
         <div className="sticky-hero">
           <canvas ref={heroCanvasRef} className="hero-canvas" />
           
-          <div className="fallow-mono" style={{ color: 'var(--fallow-cream)', zIndex: 2 }}>
-            EXAM PLATFORM / PROCTORED TESTING SYSTEM 2026
+          <div className="fallow-mono" style={{ color: 'var(--fallow-cream)', zIndex: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span>CATALOGUE // PROCTORED TESTING SYSTEM 2026</span>
+            <span style={{ color: 'var(--fallow-red)' }}>● SYSTEM ONLINE</span>
           </div>
 
           <div className="hero-content">
+            <div className="hero-pill-tag">
+              <span>⚡</span>
+              <span>STANDARDIZED EXAMINATION ENGINE</span>
+            </div>
             <h2 className="fallow-display hero-subhead">THE PRECISION ASSESSMENT HOUSE</h2>
             <h1 className="fallow-display hero-brand">EXAMIFY PRO</h1>
 
             <div style={{
               display: 'flex',
               gap: '16px',
-              marginTop: '12px',
               justifyContent: 'center',
               flexWrap: 'wrap'
             }}>
@@ -278,74 +282,32 @@ const Home = () => {
                 <>
                   <Link
                     to="/dashboard"
-                    style={{
-                      background: '#ef493c',
-                      color: '#fff',
-                      padding: '14px 34px',
-                      fontFamily: 'Martian Mono, monospace',
-                      fontSize: '12px',
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      fontWeight: 700,
-                      textDecoration: 'none',
-                      border: '1.5px solid #171717',
-                      boxShadow: '0 8px 24px rgba(239, 73, 60, 0.4)'
-                    }}
+                    className="hero-btn-primary"
                   >
-                    Open My Dashboard →
+                    <span>Open My Dashboard</span>
+                    <span>→</span>
                   </Link>
                   <Link
                     to="/quizzes"
-                    style={{
-                      background: 'transparent',
-                      color: '#e7e2d8',
-                      padding: '14px 28px',
-                      fontFamily: 'Martian Mono, monospace',
-                      fontSize: '12px',
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      textDecoration: 'none',
-                      border: '1.5px solid rgba(231, 226, 216, 0.4)'
-                    }}
+                    className="hero-btn-secondary"
                   >
-                    Browse Active Quizzes
+                    <span>Browse Active Quizzes</span>
                   </Link>
                 </>
               ) : (
                 <>
                   <Link
                     to="/register"
-                    style={{
-                      background: '#ef493c',
-                      color: '#fff',
-                      padding: '14px 32px',
-                      fontFamily: 'Martian Mono, monospace',
-                      fontSize: '12px',
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      fontWeight: 700,
-                      textDecoration: 'none',
-                      border: '1.5px solid #171717',
-                      boxShadow: '0 8px 24px rgba(239, 73, 60, 0.4)'
-                    }}
+                    className="hero-btn-primary"
                   >
-                    Create Account (Register) →
+                    <span>Create Free Account</span>
+                    <span>→</span>
                   </Link>
                   <Link
                     to="/login"
-                    style={{
-                      background: 'transparent',
-                      color: '#e7e2d8',
-                      padding: '14px 28px',
-                      fontFamily: 'Martian Mono, monospace',
-                      fontSize: '12px',
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      textDecoration: 'none',
-                      border: '1.5px solid rgba(231, 226, 216, 0.4)'
-                    }}
+                    className="hero-btn-secondary"
                   >
-                    Sign In to Project
+                    <span>Sign In to Portal</span>
                   </Link>
                 </>
               )}
@@ -353,9 +315,9 @@ const Home = () => {
           </div>
 
           <div className="hero-footer-bar fallow-mono">
-            <span>280SVH STAGE MOTION</span>
-            <span>TIMED & ANTI-CHEAT VERIFIED</span>
-            <span>SYSTEM READY</span>
+            <span>STAGE I // 280SVH POSTER PIN</span>
+            <span>PROCTOR PROTOCOL VERIFIED</span>
+            <span>SCROLL DOWN TO EXPLORE ↓</span>
           </div>
         </div>
       </section>
