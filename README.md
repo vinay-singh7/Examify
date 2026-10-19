@@ -1,162 +1,126 @@
-# Online Quiz & Exam System
+# Examify — Modern Online Quiz & Exam Platform
 
-A comprehensive MERN stack application for conducting online quizzes and examinations.
+Examify is a comprehensive, production-ready MERN stack application designed for conducting secure online examinations, assessments, and quizzes with modern Clerk authentication and real-time proctoring features.
 
-## Features
+---
 
-### For Students
-- User registration and authentication
-- Take quizzes and exams
-- View results and performance analytics
-- Track progress and history
-- Timed exams with auto-submission
+## ✨ Features
 
-### For Teachers/Admins
-- Create and manage quizzes/exams
-- Multiple question types (MCQ, True/False, Short Answer)
-- Set time limits and difficulty levels
-- Grade and review submissions
-- Generate reports and analytics
-- Manage students and courses
+### 🔐 Pure Clerk Authentication
+- **100% Clerk Powered**: No vulnerable manual credentials — seamless passwordless, Google, and email OTP sign-ins.
+- **Role Selection on Registration**: Built-in Student (`🎓`) and Teacher/Admin (`👨‍🏫`) role selection.
+- **Automatic MongoDB Sync**: Clerk user sessions are automatically synchronized with MongoDB Atlas for full compatibility with quiz creation and score tracking.
 
-## Tech Stack
+### 🎓 For Students
+- Clean, distraction-free assessment environment.
+- Timed exams with live progress indicators.
+- Instant score calculation and detailed answers breakdown.
+- Global and quiz-specific leaderboards.
+- Anti-cheat monitoring (fullscreen violation detection & tab-switch tracker).
 
-- **Frontend**: React.js, React Router, Axios, Bootstrap/Material-UI
+### 👨‍🏫 For Teachers & Admins
+- Dynamic Quiz Builder supporting Multiple Choice Questions (MCQ) with custom scoring.
+- Comprehensive student attempt analytics and performance breakdowns.
+- Time limit configurations and negative marking support.
+- Student management dashboard.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 19, React Router v7, `@clerk/react`, Axios, Vanilla CSS with Glassmorphism
 - **Backend**: Node.js, Express.js
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT (JSON Web Tokens)
+- **Database**: MongoDB Atlas with Mongoose ODM
+- **Authentication**: Clerk Authentication (`@clerk/react`) + JWT backend tokens
+- **Deployment**: Render Web Services
 
-## Project Structure
+---
 
-```
-online-quiz-exam-system/
-├── client/                 # React frontend
-│   ├── public/
-│   └── src/
-│       ├── components/     # Reusable components
-│       ├── pages/          # Page components
-│       ├── context/        # Context API for state management
-│       ├── services/       # API services
-│       ├── utils/          # Utility functions
-│       └── App.js
-├── server/                 # Express backend
-│   ├── config/            # Configuration files
-│   ├── controllers/       # Route controllers
-│   ├── middleware/        # Custom middleware
-│   ├── models/            # Mongoose models
-│   ├── routes/            # API routes
-│   └── server.js          # Entry point
-├── .env                   # Environment variables
-├── .gitignore
-├── package.json
+## 📁 Project Structure
+
+```text
+Examify/
+├── client/                     # React 19 Frontend
+│   ├── public/                 # HTML templates & static icons
+│   ├── src/
+│   │   ├── components/         # Reusable components (Navbar, ClerkSync, PrivateRoute)
+│   │   ├── context/            # AuthContext & state providers
+│   │   ├── pages/              # Quiz, Dashboard, Login, Leaderboard pages
+│   │   └── services/           # Axios API service
+│   └── package.json
+├── server/                     # Express.js Backend
+│   ├── config/                 # MongoDB database connection
+│   ├── controllers/            # Auth, Quiz, User, Submission controllers
+│   ├── middleware/             # Auth & Role verification middleware
+│   ├── models/                 # User, Quiz, and Submission schemas
+│   ├── routes/                 # REST API endpoints
+│   └── server.js               # Express application entry & production static serving
+├── render.yaml                 # Render Blueprint configuration
+├── package.json                # Root package & deployment scripts
 └── README.md
 ```
 
-## Installation
+---
 
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (v4.4 or higher)
-- npm or yarn
+## 🚀 Local Development Setup
 
-### Setup Instructions
+### 1. Prerequisites
+- **Node.js** (v18+ recommended)
+- **MongoDB** (Local instance or MongoDB Atlas cluster)
+- **Clerk Account** (Free tier at [clerk.com](https://clerk.com))
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd online-quiz-exam-system
-   ```
+### 2. Installation
+Clone the repository and install all dependencies:
+```bash
+git clone https://github.com/vinay-singh7/Examify.git
+cd Examify
+npm run install-all
+```
 
-2. **Install dependencies**
-   ```bash
-   npm run install-all
-   ```
+### 3. Environment Setup
 
-3. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   Update the `.env` file with your configuration.
+Create `.env` in the root directory:
+```env
+PORT=5001
+NODE_ENV=development
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+CLIENT_URL=http://localhost:3000
+```
 
-4. **Start MongoDB**
-   ```bash
-   # If using local MongoDB
-   mongod
-   ```
+Create `client/.env.local`:
+```env
+REACT_APP_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+```
 
-5. **Run the application**
-   ```bash
-   # Development mode (runs both frontend and backend)
-   npm run dev
+### 4. Run Locally
+Run both backend (port 5001) and frontend (port 3000) concurrently:
+```bash
+npm run dev
+```
 
-   # Run backend only
-   npm run server
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-   # Run frontend only
-   npm run client
-   ```
+---
 
-6. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
+## 🌐 Deployment on Render
 
-## API Endpoints
+This project is configured for deployment on [Render](https://render.com) as a single Unified Web Service.
 
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user
+### Quick Deploy via Render Web Service:
+1. Link your GitHub repository (`Examify`) on Render.
+2. Select **Web Service** with the following settings:
+   - **Environment**: `Node`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+3. Add Environment Variables:
+   - `NODE_ENV`: `production`
+   - `MONGODB_URI`: `your_mongodb_atlas_uri`
+   - `JWT_SECRET`: `your_jwt_secret_key`
+   - `REACT_APP_CLERK_PUBLISHABLE_KEY`: `your_clerk_publishable_key`
+4. Click **Deploy Web Service**.
 
-### Users
-- `GET /api/users` - Get all users (admin)
-- `GET /api/users/:id` - Get user by ID
-- `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user (admin)
+---
 
-### Quizzes
-- `GET /api/quizzes` - Get all quizzes
-- `GET /api/quizzes/:id` - Get quiz by ID
-- `POST /api/quizzes` - Create quiz (teacher/admin)
-- `PUT /api/quizzes/:id` - Update quiz (teacher/admin)
-- `DELETE /api/quizzes/:id` - Delete quiz (admin)
-
-### Submissions
-- `GET /api/submissions` - Get user submissions
-- `GET /api/submissions/:id` - Get submission by ID
-- `POST /api/submissions` - Submit quiz/exam
-- `PUT /api/submissions/:id/grade` - Grade submission (teacher/admin)
-
-## Database Models
-
-### User
-- name, email, password
-- role (student, teacher, admin)
-- createdAt, updatedAt
-
-### Quiz
-- title, description
-- questions (array)
-- timeLimit, passingScore
-- difficulty, category
-- creator, isPublished
-- createdAt, updatedAt
-
-### Submission
-- user, quiz
-- answers (array)
-- score, grade
-- startTime, endTime, timeTaken
-- status (pending, graded)
-- feedback
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License.
+## 📄 License
+This project is open source and available under the [MIT License](LICENSE).
