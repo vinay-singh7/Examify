@@ -58,18 +58,41 @@ app.use('/submissions', submissionRoutes);
 
 
 const path = require('path');
+const fs = require('fs');
 
 // Serve client build in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+  const buildPath = path.join(__dirname, '../client/build');
+  const indexPath = path.join(buildPath, 'index.html');
 
-  app.get('*', (req, res) => {
-    // Exclude API routes
-    if (req.path.startsWith('/api') || req.path.startsWith('/auth')) {
-      return res.status(404).json({ success: false, message: 'API route not found' });
-    }
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-  });
+  if (fs.existsSync(indexPath)) {
+    app.use(express.static(buildPath));
+
+    app.get('*', (req, res) => {
+      if (req.path.startsWith('/api') || req.path.startsWith('/auth')) {
+        return res.status(404).json({ success: false, message: 'API route not found' });
+      }
+      res.sendFile(indexPath);
+    });
+  } else {
+    app.get('*', (req, res) => {
+      if (req.path.startsWith('/api') || req.path.startsWith('/auth')) {
+        return res.status(404).json({ success: false, message: 'API route not found' });
+      }
+      res.status(200).send(`
+        <!DOCTYPE html>
+        <html>
+          <head><title>Examify Backend Active</title></head>
+          <body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;background:#0d1117;color:#fff;text-align:center;">
+            <div>
+              <h2>Examify Backend is Running!</h2>
+              <p style="color:#8b949e">Building client frontend... Please make sure Render's Build Command is: <code>npm run build</code></p>
+            </div>
+          </body>
+        </html>
+      `);
+    });
+  }
 } else {
   app.get('/', (req, res) => {
     res.json({ message: 'Online Quiz & Exam System API' });
