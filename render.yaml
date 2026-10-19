@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: examify
+    env: node
+    plan: free
+    buildCommand: npm install && cd client && npm install --legacy-peer-deps && CI=false npm run build
+    startCommand: node server/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: REACT_APP_CLERK_PUBLISHABLE_KEY
+        value: pk_test_c21pbGluZy1jcmFuZS0yMzUuY2xlcmsuYWNjb3VudHMuZGV2JA

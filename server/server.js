@@ -57,9 +57,24 @@ app.use('/quizzes', quizRoutes);
 app.use('/submissions', submissionRoutes);
 
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Online Quiz & Exam System API' });
-});
+const path = require('path');
+
+// Serve client build in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+
+  app.get('*', (req, res) => {
+    // Exclude API routes
+    if (req.path.startsWith('/api') || req.path.startsWith('/auth')) {
+      return res.status(404).json({ success: false, message: 'API route not found' });
+    }
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.json({ message: 'Online Quiz & Exam System API' });
+  });
+}
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
