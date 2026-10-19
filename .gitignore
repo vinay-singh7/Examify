@@ -6,7 +6,7 @@ client/node_modules/
 .env
 
 # Production build
-client/build/
+# client/build/ (tracked for guaranteed hosting on Render)
 
 # Logs
 *.log
